@@ -1,0 +1,23 @@
+local cache = {};
+local maid = {}
+
+function maid.newDB(name, time_)
+	maid[name] = {
+		["Current"] = 0,
+		["Time_Required"] = time_
+	}
+end
+
+function maid.processDB(name, req_Time)
+	local dbData = cache[name];
+	
+	if dbData then
+		req_Time = req_Time or dbData.Time_Required or 0
+		return (dbData.Current + req_Time < tick()) or false;
+	elseif not dbData then
+		warn("Table missing,")
+	end
+	
+end
+
+return maid;
